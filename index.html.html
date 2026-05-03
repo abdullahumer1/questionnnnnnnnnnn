@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huma ke liye… 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Nastaliq+Urdu:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf6ee;
+    --blush: #f2d4c8;
+    --dusty-rose: #d4a0a0;
+    --warm-brown: #8b5e52;
+    --deep-brown: #5c3d35;
+    --gold: #c9a96e;
+    --gold-light: #e8d5b0;
+    --parchment: #f5ead8;
+    --ink: #3a2820;
+    --muted: #9b7b72;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--cream);
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Paper texture background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse at 20% 10%, #f7e8da 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 90%, #f0d8d0 0%, transparent 55%),
+      radial-gradient(ellipse at 60% 40%, #fdf0e4 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Decorative corner ornaments */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(circle at 2% 2%, rgba(201,169,110,0.12) 0%, transparent 30%),
+      radial-gradient(circle at 98% 98%, rgba(201,169,110,0.12) 0%, transparent 30%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrapper {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px 60px;
+  }
+
+  /* Floating petals */
+  .petal {
+    position: fixed;
+    width: 8px;
+    height: 12px;
+    border-radius: 50% 50% 50% 0;
+    opacity: 0;
+    animation: floatPetal linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .petal:nth-child(1)  { background: rgba(242,212,200,0.6); left: 8%;  animation-duration: 14s; animation-delay: 0s;   width: 9px;  height: 13px; }
+  .petal:nth-child(2)  { background: rgba(212,160,160,0.5); left: 22%; animation-duration: 18s; animation-delay: 3s;   width: 7px;  height: 11px; }
+  .petal:nth-child(3)  { background: rgba(245,234,216,0.7); left: 40%; animation-duration: 12s; animation-delay: 1s;   width: 10px; height: 14px; }
+  .petal:nth-child(4)  { background: rgba(201,169,110,0.4); left: 60%; animation-duration: 16s; animation-delay: 5s;   width: 6px;  height: 10px; }
+  .petal:nth-child(5)  { background: rgba(242,212,200,0.5); left: 75%; animation-duration: 20s; animation-delay: 2s;   width: 8px;  height: 12px; }
+  .petal:nth-child(6)  { background: rgba(212,160,160,0.4); left: 88%; animation-duration: 15s; animation-delay: 7s;   width: 7px;  height: 11px; }
+  .petal:nth-child(7)  { background: rgba(245,234,216,0.6); left: 50%; animation-duration: 13s; animation-delay: 9s;   width: 9px;  height: 13px; }
+  .petal:nth-child(8)  { background: rgba(201,169,110,0.3); left: 15%; animation-duration: 17s; animation-delay: 4s;   width: 6px;  height: 10px; }
+
+  @keyframes floatPetal {
+    0%   { transform: translateY(-20px) rotate(0deg);   opacity: 0; }
+    10%  { opacity: 0.8; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Header ornament */
+  .ornament {
+    text-align: center;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.3s;
+  }
+  .ornament svg {
+    width: 180px;
+    height: 30px;
+    color: var(--gold);
+  }
+
+  /* Main card */
+  .card {
+    background: rgba(253, 246, 238, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(201,169,110,0.3);
+    border-radius: 4px;
+    padding: 48px 36px 44px;
+    max-width: 560px;
+    width: 100%;
+    box-shadow:
+      0 2px 8px rgba(92,61,53,0.06),
+      0 8px 32px rgba(92,61,53,0.08),
+      0 0 0 1px rgba(201,169,110,0.1),
+      inset 0 1px 0 rgba(255,255,255,0.8);
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 0.6s;
+  }
+
+  /* Corner decorations on card */
+  .card::before, .card::after {
+    content: '✦';
+    position: absolute;
+    font-size: 10px;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+  .card::before { top: 14px; left: 18px; }
+  .card::after  { bottom: 14px; right: 18px; }
+
+  .card-corner-br { position: absolute; top: 14px; right: 18px; font-size: 10px; color: var(--gold); opacity: 0.6; }
+  .card-corner-bl { position: absolute; bottom: 14px; left: 18px; font-size: 10px; color: var(--gold); opacity: 0.6; }
+
+  /* Name header */
+  .to-name {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 6px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1s;
+  }
+
+  .name-highlight {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--deep-brown);
+    text-align: center;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.2s;
+  }
+
+  .name-highlight span {
+    color: var(--warm-brown);
+  }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.4s;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+  }
+  .divider-icon {
+    color: var(--gold);
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  /* Intro text */
+  .intro-text {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--deep-brown);
+    text-align: center;
+    margin-bottom: 32px;
+    font-weight: 300;
+    font-style: italic;
+    min-height: 160px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.6s;
+  }
+
+  .intro-text .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background: var(--warm-brown);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 0.8s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* Section title */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 2s;
+  }
+
+  /* Options */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 2.2s;
+  }
+
+  .option-btn {
+    background: rgba(245, 234, 216, 0.6);
+    border: 1px solid rgba(201,169,110,0.35);
+    border-radius: 3px;
+    padding: 18px 22px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    color: var(--deep-brown);
+    line-height: 1.6;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,169,110,0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .option-btn:hover {
+    background: rgba(242, 212, 200, 0.5);
+    border-color: rgba(201,169,110,0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(139,94,82,0.12);
+  }
+  .option-btn:hover::before { opacity: 1; }
+
+  .option-btn:active {
+    transform: translateY(0px);
+  }
+
+  /* Highlighted option */
+  .option-btn.highlighted {
+    background: rgba(242, 212, 200, 0.5);
+    border: 1.5px solid var(--gold);
+    box-shadow:
+      0 0 0 4px rgba(201,169,110,0.1),
+      0 4px 20px rgba(201,169,110,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.6);
+    transform: scale(1.02);
+  }
+
+  .option-btn.highlighted:hover {
+    box-shadow:
+      0 0 0 6px rgba(201,169,110,0.15),
+      0 8px 32px rgba(201,169,110,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.6);
+    transform: scale(1.02) translateY(-2px);
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--gold);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+    font-family: 'Crimson Pro', serif;
+    font-style: normal;
+  }
+
+  .pref-line {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* Response message */
+  .response-box {
+    display: none;
+    background: rgba(245, 234, 216, 0.7);
+    border: 1px solid rgba(201,169,110,0.4);
+    border-radius: 3px;
+    padding: 24px 20px;
+    text-align: center;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .response-box.show {
+    display: block;
+  }
+
+  .response-box .response-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .response-box .response-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--deep-brown);
+    line-height: 1.7;
+  }
+
+  .response-box .response-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 8px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 2.8s;
+  }
+
+  .footer-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .footer-divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,169,110,0.3), transparent);
+  }
+
+  .footer-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .footer-sig {
+    font-size: 12px;
+    color: rgba(155,123,114,0.5);
+    margin-top: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Shake for option 3 response */
+  @keyframes shakeNo {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    40%      { transform: translateX(6px); }
+    60%      { transform: translateX(-4px); }
+    80%      { transform: translateX(4px); }
+  }
+  .shake { animation: shakeNo 0.5s ease; }
+
+  /* Mobile tweaks */
+  @media (max-width: 480px) {
+    .page-wrapper { padding: 28px 12px 50px; }
+    .card { padding: 36px 22px 36px; }
+    .name-highlight { font-size: 24px; }
+    .intro-text { font-size: 16px; }
+    .option-btn { font-size: 15px; padding: 16px 18px; }
+    .option-btn.highlighted { transform: scale(1.01); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating petals -->
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+
+<div class="page-wrapper">
+
+  <!-- Top ornament -->
+  <div class="ornament">
+    <svg viewBox="0 0 200 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 15 Q50 3 100 15 Q150 27 190 15" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M10 15 Q50 27 100 15 Q150 3 190 15" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <circle cx="100" cy="15" r="3" fill="currentColor" opacity="0.7"/>
+      <circle cx="10"  cy="15" r="2" fill="currentColor" opacity="0.4"/>
+      <circle cx="190" cy="15" r="2" fill="currentColor" opacity="0.4"/>
+      <circle cx="55"  cy="11" r="1.5" fill="currentColor" opacity="0.35"/>
+      <circle cx="145" cy="19" r="1.5" fill="currentColor" opacity="0.35"/>
+    </svg>
+  </div>
+
+  <div class="card">
+    <span class="card-corner-br">✦</span>
+    <span class="card-corner-bl">✦</span>
+
+    <p class="to-name">ek Question… sirf</p>
+    <h1 class="name-highlight"><span>A</span>PP<span> ke liye</span> 🔫</h1>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-icon">❧</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <p class="intro-text" id="introText"></p>
+
+    <p class="section-title">— Aap kya prefer karengi? —</p>
+
+    <div class="options" id="optionsSection">
+
+      <!-- Option 1 -->
+      <button class="option-btn" onclick="handleChoice(1)">
+        Main apko  multiple gifts dunga…<br>
+        jo mujhe sahi lagay 😌
+      </button>
+
+      <!-- Option 2 — Highlighted -->
+      <button class="option-btn highlighted" onclick="handleChoice(2)">
+        <span class="badge">⭐ Meri Preference</span><br>
+        Sirf 1 gift 🎁… lekin special 😬
+        <span class="pref-line">But you have to accept — gift is gift 🫣</span>
+      </button>
+
+      <!-- Option 3 -->
+      <button class="option-btn" onclick="handleChoice(3)" id="opt3btn">
+        Aap decide nahi karna chahti 😏
+      </button>
+
+    </div>
+
+    <!-- Response box -->
+    <div class="response-box" id="responseBox">
+      <span class="response-icon" id="responseIcon"></span>
+      <p class="response-text" id="responseText"></p>
+      <p class="response-sub" id="responseSub"></p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-divider">
+        <div class="footer-divider-line"></div>
+        <span style="color:var(--gold);font-size:12px;opacity:0.6;">✦</span>
+        <div class="footer-divider-line"></div>
+      </div>
+      <p class="footer-text">"Boht lambi hori thi toh agy ni kia manualy Select kr k SS share krdo🔫 ."</p>
+      <p class="footer-sig">— HEHE</p>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // --- Typing animation ---
+  const introLines = [
+    "Main confused hoon…",
+    "aur mere paas koi nahi jisse main yeh discuss kar sakoon.",
+    "",
+    "Isliye maine yeh website banayi.",
+    "",
+    "Aur main yeh website ke zariye isliye kar raha hoon kyunke…",
+    "main chahta nahi ke aap abhi bahut saare sawaal karein.",
+    "It's too early. 😭",
+    "",
+    "Main bas yeh jaanna chahta hoon…",
+    "taake main us hisaab se tayari kar sakoon. BTW Aesy e bnai msg pe bh poch skta th but dil kr ra th"
+  ];
+
+  let fullText = introLines.join('\n');
+  let charIndex = 0;
+  const el = document.getElementById('introText');
+  let typingDone = false;
+
+  function typeWriter() {
+    if (charIndex < fullText.length) {
+      const ch = fullText[charIndex];
+      if (ch === '\n') {
+        el.innerHTML = el.innerHTML.replace('<span class="cursor"></span>', '') + '<br><span class="cursor"></span>';
+      } else {
+        el.innerHTML = el.innerHTML.replace('<span class="cursor"></span>', '') + ch + '<span class="cursor"></span>';
+      }
+      charIndex++;
+      const delay = ch === '.' || ch === ',' ? 60 : ch === '\n' ? 220 : 28;
+      setTimeout(typeWriter, delay);
+    } else {
+      typingDone = true;
+      // Keep cursor blinking at end
+    }
+  }
+
+  // Start typing after intro animation
+  setTimeout(() => {
+    el.innerHTML = '<span class="cursor"></span>';
+    typeWriter();
+  }, 2200);
+
+  // --- Choice handler ---
+  let choice1or2Made = false;
+
+  function handleChoice(num) {
+    const box = document.getElementById('responseBox');
+    const icon = document.getElementById('responseIcon');
+    const text = document.getElementById('responseText');
+    const sub  = document.getElementById('responseSub');
+    const opt3 = document.getElementById('opt3btn');
+
+    if (num === 1 || num === 2) {
+      choice1or2Made = true;
+      icon.textContent = num === 1 ? '💌' : '🎁';
+      text.textContent = 'Noted… ab main us hisaab se tayari karunga 💭';
+      sub.textContent  = num === 2
+        ? 'Acha choice hai waise 😌 I had a feeling…'
+        : 'Theek hai, main apni best judgment lagaunga 😊';
+      box.classList.add('show');
+      box.style.display = 'block';
+
+      // Scroll to response
+      setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+
+    } else if (num === 3) {
+      // Shake the button
+      opt3.classList.remove('shake');
+      void opt3.offsetWidth; // reflow
+      opt3.classList.add('shake');
+
+      icon.textContent = '😄';
+      text.textContent = 'Nahi madam 😄\nAapko 1 ya 2 mein se choose karna hi hoga.';
+      sub.textContent  = 'Koi option nahi yahan… sirf do hi choices hain 🙂';
+
+      // Multi-line support
+      text.style.whiteSpace = 'pre-line';
+
+      box.classList.add('show');
+      box.style.display = 'block';
+
+      setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+    }
+  }
+</script>
+</body>
+</html>
